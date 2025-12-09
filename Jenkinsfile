@@ -1,113 +1,162 @@
 pipeline {
     agent any
-    
-    environment {
-        // Docker image tags
-        APP_NAME = 'swe7303-travel-booking'
-        DOCKER_IMAGE = "${APP_NAME}:${BUILD_NUMBER}"
-        
-        // Database credentials (in production, use Jenkins credentials)
-        MYSQL_ROOT_PASSWORD = 'Shisir.55'
-        MYSQL_DATABASE = 'devops'
+   
+    tools {
+        maven 'Maven-3.9'
+        jdk 'JDK-21'
     }
-    
+   
+    environment {
+        DOCKER_IMAGE = 'booking-system'
+        DOCKER_TAG = "${BUILD_NUMBER}"
+        DOCKER_REGISTRY = 'ccr'
+        MYSQL_ROOT_PASSWORD = credentials('mysql-root-password')
+        MYSQL_DATABASE = credentials('mysql-database')
+        MYSQL_USER = credentials('mysql-user')
+        MYSQL_PASSWORD = credentials('mysql-password')
+    }
+   
     stages {
-        // Stage 1: Checkout code
         stage('Checkout') {
             steps {
-                git branch: 'main', 
-                    url: 'https://github.com/YOUR_USERNAME/swe7303-travel-booking.git',
-                    credentialsId: 'github-token'
+                echo 'Checking out code from repository...'
+                checkout scm
             }
         }
-        
-        // Stage 2: Build with Maven
-        stage('Maven Build') {
+       
+        stage('Build') {
             steps {
-                sh 'mvn clean compile -DskipTests'
+                echo 'Building the application...'
+                script {
+                    if (isUnix()) {
+                        sh './mvnw clean package -DskipTests'
+                    } else {
+                        bat './mvnw.cmd clean package -DskipTests'
+                    }
+                }
             }
         }
-        
-        // Stage 3: Run Tests
-        stage('Run Tests') {
+       
+        stage('Test') {
             steps {
-                sh 'mvn test'
+                echo 'Running unit tests...'
+                script {
+                    if (isUnix()) {
+                        sh './mvnw test'
+                    } else {
+                        bat './mvnw.cmd test'
+                    }
+                }
             }
             post {
                 always {
-                    junit 'target/surefire-reports/*.xml'
+                    junit '**/target/surefire-reports/*.xml'
+                    echo 'Test results published'
                 }
             }
         }
-        
-        // Stage 4: Build Docker Image
-        stage('Build Docker Image') {
+       
+        stage('Code Quality Analysis') {
             steps {
+                echo 'Analyzing code quality...'
+                // Add SonarQube analysis if configured
+                // sh 'mvn sonar:sonar'
+            }
+        }
+       
+        stage('Docker Build') {
+            steps {
+                echo 'Building Docker image...'
                 script {
-                    sh '''
-                        echo "Building Docker image..."
-                        docker build -t ${DOCKER_IMAGE} .
-                        docker tag ${DOCKER_IMAGE} ${APP_NAME}:latest
-                    '''
+                    docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
+                    docker.build("${DOCKER_IMAGE}:latest")
                 }
             }
         }
-        
-        // Stage 5: Run with Docker Compose
-        stage('Deploy with Docker Compose') {
+       
+        stage('Docker Push') {
             steps {
+                echo 'Pushing Docker image to registry...'
                 script {
-                    sh '''
-                        echo "Stopping existing containers..."
-                        docker-compose down || true
-                        
-                        echo "Starting containers..."
-                        docker-compose up -d
-                        
-                        echo "Waiting for services to start..."
-                        sleep 30
-                    '''
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
+                        docker.image("${DOCKER_IMAGE}:${DOCKER_TAG}").push()
+                        docker.image("${DOCKER_IMAGE}:latest").push()
+                    }
                 }
             }
         }
-        
-        // Stage 6: Verify Deployment
-        stage('Verify Deployment') {
+       
+        stage('Deploy to Staging') {
             steps {
+                echo 'Deploying to staging environment...'
                 script {
-                    sh '''
-                        echo "Checking if application is running..."
-                        curl -f http://localhost:8080/ || exit 1
-                        echo " Application is running!"
-                        
-                        echo "Checking containers..."
-                        docker ps
-                    '''
+                    if (isUnix()) {
+                        sh 'docker-compose down'
+                        sh 'docker-compose up -d'
+                    } else {
+                        bat 'docker-compose down'
+                        bat 'docker-compose up -d'
+                    }
+                }
+            }
+        }
+       
+        stage('Health Check') {
+            steps {
+                echo 'Performing health check...'
+                script {
+                    sleep(time: 30, unit: 'SECONDS')
+                    if (isUnix()) {
+                        sh 'curl -f http://localhost:8080/actuator/health || exit 1'
+                    } else {
+                        bat 'powershell -Command "Invoke-WebRequest -Uri http://localhost:8080 -UseBasicParsing"'
+                    }
+                }
+            }
+        }
+       
+        stage('Deploy to Production') {
+            when {
+                branch 'main'
+            }
+            steps {
+                input message: 'Deploy to Production?', ok: 'Deploy'
+                echo 'Deploying to production environment...'
+                script {
+                    // Add production deployment steps
+                    echo 'Production deployment would happen here'
                 }
             }
         }
     }
-    
+   
     post {
+        always {
+            echo 'Pipeline execution completed'
+            cleanWs()
+        }
         success {
-            echo ' Pipeline completed successfully!'
-            emailext (
-                subject: "SUCCESS: Pipeline ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
-                body: "Build ${env.BUILD_NUMBER} was successful!\n\nCheck: ${env.BUILD_URL}",
-                to: 'your-email@example.com'
-            )
+            echo 'Pipeline executed successfully!'
+            // Add notification (email, Slack, etc.)
         }
         failure {
-            echo ' Pipeline failed!'
-            emailext (
-                subject: "FAILURE: Pipeline ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
-                body: "Build ${env.BUILD_NUMBER} failed!\n\nCheck: ${env.BUILD_URL}",
-                to: 'your-email@example.com'
-            )
+            echo 'Pipeline failed!'
+            script {
+                // Rollback to previous version
+                echo 'Rolling back to previous stable version...'
+                if (isUnix()) {
+                    sh 'docker-compose down'
+                    sh 'docker pull ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:latest'
+                    sh 'docker-compose up -d'
+                } else {
+                    bat 'docker-compose down'
+                    bat 'docker pull ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:latest'
+                    bat 'docker-compose up -d'
+                }
+            }
         }
-        always {
-            echo ' Cleaning up workspace...'
-            cleanWs()
+        unstable {
+            echo 'Pipeline is unstable'
         }
     }
 }
