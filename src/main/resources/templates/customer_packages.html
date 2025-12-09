@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Browse Packages</title>
+<link th:replace="~{fragments/navbar :: head}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/customer_packages.css}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navigation('browse-packages')}"></div>
+
+<div class="hero">
+    <h1>Explore Our Amazing Packages</h1>
+    <p>Find your perfect experience and book instantly</p>
+</div>
+
+<div class="container">
+    <h2 class="section-title">Available Packages</h2>
+    
+    <div class="packages-grid">
+        <div class="package-card" th:each="pkg, iterStat : ${packages}">
+            <span class="highlight" th:if="${iterStat.index == 1}">Most Popular</span>
+            <h3 th:text="${pkg.pname}">Package Name</h3>
+            <div class="price" th:text="'£' + ${pkg.ppriced}">£0.00</div>
+            <ul class="package-features" th:attr="data-desc=${pkg.pdescription}"></ul>
+            <a th:href="@{/customer/book-package(packageId=${pkg.pid})}" class="btn-book">Select Package</a>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.package-features').forEach(function(ul) {
+        const description = ul.getAttribute('data-desc');
+        if (description) {
+            const features = description.split(',');
+            features.forEach(function(feature) {
+                const li = document.createElement('li');
+                li.innerHTML = '<i class="fas fa-check-circle"></i><span>' + feature.trim() + '</span>';
+                ul.appendChild(li);
+            });
+        }
+    });
+});
+</script>
+
+</body>
+</html>

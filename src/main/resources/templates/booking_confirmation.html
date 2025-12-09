@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Booking Confirmation</title>
+<link th:replace="~{fragments/navbar :: head}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/booking_confirmation.css}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navigation('my-bookings')}"></div>
+
+<div class="success-banner no-print">
+    <div class="container">
+        <i class="fas fa-check-circle"></i>
+        <h1>Booking Confirmed!</h1>
+        <p>Your booking has been successfully confirmed. Reference: #<span th:text="${booking.bookingId}">1</span></p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="confirmation-card" id="confirmationCard">
+        <div class="confirmation-header">
+            <div class="brand">
+                <i class="fas fa-calendar-check"></i>
+                <h2>Booking Confirmation</h2>
+            </div>
+            <div class="booking-number">
+                <span class="label">Booking Reference</span>
+                <span class="value">#<span th:text="${booking.bookingId}">001</span></span>
+            </div>
+        </div>
+        
+        <div class="status-badge confirmed">
+            <i class="fas fa-check-circle"></i> Confirmed
+        </div>
+        
+        <div class="confirmation-details">
+            <h3><i class="fas fa-info-circle"></i> Booking Details</h3>
+            <div class="detail-row">
+                <span class="detail-label">Package:</span>
+                <span class="detail-value" th:text="${booking.packageName}">Premium Package</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Visit Date:</span>
+                <span class="detail-value" th:text="${booking.bookingDate}">2024-01-01</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Total Amount:</span>
+                <span class="detail-value amount">£<span th:text="${booking.totalAmount}">299.99</span></span>
+            </div>
+        </div>
+        
+        <div class="confirmation-details">
+            <h3><i class="fas fa-user"></i> Customer Information</h3>
+            <div class="detail-row">
+                <span class="detail-label">Name:</span>
+                <span class="detail-value" th:text="${booking.customerName}">John Doe</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Email:</span>
+                <span class="detail-value" th:text="${booking.customerEmail}">john@example.com</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Phone:</span>
+                <span class="detail-value" th:text="${booking.customerPhone}">1234567890</span>
+            </div>
+        </div>
+        
+        <div class="confirmation-details" th:if="${booking.paymentMethod != null}">
+            <h3><i class="fas fa-credit-card"></i> Payment Information</h3>
+            <div class="detail-row">
+                <span class="detail-label">Payment Method:</span>
+                <span class="detail-value" th:text="${booking.paymentMethod}">Card</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Transaction ID:</span>
+                <span class="detail-value" th:text="${booking.transactionId}">MOCK-123456</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Payment Status:</span>
+                <span class="detail-value payment-completed" th:text="${booking.paymentStatus}">Completed</span>
+            </div>
+        </div>
+        
+        <div class="confirmation-footer">
+            <p><i class="fas fa-envelope"></i> A confirmation email has been sent to your email address.</p>
+            <p><i class="fas fa-info-circle"></i> Please keep this confirmation for your records.</p>
+        </div>
+    </div>
+    
+    <div class="action-buttons no-print">
+        <button onclick="window.print()" class="btn btn-print">
+            <i class="fas fa-print"></i> Print Confirmation
+        </button>
+        <a href="/customer/my-bookings" class="btn btn-secondary">
+            <i class="fas fa-list"></i> View All Bookings
+        </a>
+        <a href="/customer/browse-packages" class="btn btn-outline">
+            <i class="fas fa-gift"></i> Book Another Package
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

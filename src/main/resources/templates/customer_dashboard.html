@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Customer Dashboard</title>
+<link th:replace="~{fragments/navbar :: head}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/customer_dashboard.css}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navigation('customer-dashboard')}"></div>
+
+<div class="hero">
+    <h1>Welcome Back, [[${un}]]! 🎉</h1>
+    <p>Explore amazing packages and create unforgettable memories</p>
+</div>
+
+<div class="container">
+    <h2 class="section-title">What would you like to do today?</h2>
+    
+    <div class="card-grid">
+        <div class="dashboard-card">
+            <i class="fas fa-gift"></i>
+            <h3>Browse Packages</h3>
+            <p>Discover exciting packages tailored for your perfect experience</p>
+            <a href="/customer/browse-packages" class="btn-action">Explore Now</a>
+        </div>
+        
+        <div class="dashboard-card">
+            <i class="fas fa-calendar-check"></i>
+            <h3>Book a Package</h3>
+            <p>Reserve your preferred package with instant confirmation</p>
+            <a href="/customer/book-package" class="btn-action">Book Now</a>
+        </div>
+        
+        <div class="dashboard-card">
+            <i class="fas fa-list-alt"></i>
+            <h3>My Bookings</h3>
+            <p>View and manage all your bookings in one place</p>
+            <a href="/customer/my-bookings" class="btn-action">View Bookings</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

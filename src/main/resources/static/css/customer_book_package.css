@@ -1,0 +1,346 @@
+body {
+    background-color: #f0f8ff;
+    margin: 0;
+}
+
+.hero {
+    background: linear-gradient(135deg, #2821a9 0%, #667eea 100%);
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.booking-form {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 40px;
+}
+
+.section-title {
+    text-align: center;
+    color: #2821a9;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #2821a9;
+    box-shadow: 0 0 0 3px rgba(40, 33, 169, 0.1);
+}
+
+.form-group input[readonly] {
+    background-color: #f5f5f5;
+}
+
+.date-picker-wrapper {
+    position: relative;
+}
+
+.simple-date-picker {
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 16px 20px;
+    background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+    border: 2px solid #d1d5db !important;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #1f2937;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    min-height: 50px;
+}
+
+.simple-date-picker:hover {
+    background: #ffffff;
+    border-color: #2821a9 !important;
+    box-shadow: 0 2px 8px rgba(40, 33, 169, 0.15);
+    transform: translateY(-1px);
+}
+
+.simple-date-picker:focus {
+    background: #ffffff;
+    border-color: #2821a9 !important;
+    box-shadow: 0 0 0 4px rgba(40, 33, 169, 0.15), 0 2px 8px rgba(40, 33, 169, 0.2);
+    outline: none;
+}
+
+.simple-date-picker::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    opacity: 0.8;
+    padding: 6px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    background-color: rgba(40, 33, 169, 0.08);
+    margin-left: 8px;
+}
+
+.simple-date-picker::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+    background-color: rgba(40, 33, 169, 0.15);
+    transform: scale(1.1);
+}
+
+/* Style the calendar popup */
+.simple-date-picker::-webkit-datetime-edit {
+    padding: 0;
+}
+
+.simple-date-picker::-webkit-datetime-edit-fields-wrapper {
+    padding: 0;
+}
+
+.simple-date-picker::-webkit-datetime-edit-text {
+    padding: 0 0.3em;
+    color: #666;
+}
+
+.simple-date-picker::-webkit-datetime-edit-month-field,
+.simple-date-picker::-webkit-datetime-edit-day-field,
+.simple-date-picker::-webkit-datetime-edit-year-field {
+    padding: 0 0.2em;
+    color: #1f2937;
+    font-weight: 500;
+}
+
+.simple-date-picker::-webkit-datetime-edit-month-field:focus,
+.simple-date-picker::-webkit-datetime-edit-day-field:focus,
+.simple-date-picker::-webkit-datetime-edit-year-field:focus {
+    background-color: #2821a9;
+    color: white;
+    outline: none;
+    border-radius: 4px;
+}
+
+.date-helper {
+    display: block;
+    margin-top: 6px;
+    color: #666;
+    font-size: 0.85rem;
+}
+
+.btn-submit {
+    width: 100%;
+    background: #c11616;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 1rem;
+}
+
+.btn-submit:hover {
+    background: #159557;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.price-display {
+    background: #f0f8ff;
+    padding: 15px;
+    border-radius: 6px;
+    border-left: 4px solid #2821a9;
+    margin-top: 10px;
+}
+
+.price-display strong {
+    color: #2821a9;
+    font-size: 1.3rem;
+}
+
+.payment-options {
+    display: flex;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.payment-option {
+    flex: 1;
+    text-align: center;
+    padding: 1.5rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: white;
+}
+
+.payment-option:hover {
+    border-color: #2821a9;
+    background-color: #f8f9ff;
+}
+
+.payment-option.selected {
+    border-color: #2821a9;
+    background-color: #e8f0ff;
+}
+
+.payment-option i {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #2821a9;
+}
+
+.payment-option p {
+    margin: 0;
+    font-weight: 600;
+    color: #333;
+}
+
+.qr-code, .card-payment {
+    display: none;
+    text-align: center;
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    background: #f8f9ff;
+    border-radius: 8px;
+    border: 1px solid #e0e8ff;
+}
+
+.mock-payment-notice {
+    background: #fff3cd;
+    border: 2px solid #ffc107;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mock-payment-notice i {
+    font-size: 1.5rem;
+    color: #856404;
+}
+
+.mock-payment-notice p {
+    margin: 0;
+    color: #856404;
+    font-size: 0.95rem;
+}
+
+.mock-qr-container {
+    position: relative;
+    display: inline-block;
+}
+
+.mock-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(40, 33, 169, 0.9);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+
+.qr-code img {
+    max-width: 200px;
+    border: 2px solid #ddd;
+    padding: 1rem;
+    border-radius: 8px;
+    background: white;
+    margin: 1rem 0;
+}
+
+.card-payment {
+    text-align: left;
+}
+
+.test-card-info {
+    background: #e7f3ff;
+    border: 2px solid #2821a9;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 1.5rem;
+}
+
+.test-card-info p {
+    margin: 0 0 10px 0;
+    color: #2821a9;
+    font-weight: 600;
+}
+
+.test-card-info ul {
+    margin: 10px 0;
+    padding-left: 20px;
+    list-style: none;
+}
+
+.test-card-info ul li {
+    margin: 5px 0;
+    color: #333;
+}
+
+.test-card-info ul li i {
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+.card-icons {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.card-icons i {
+    font-size: 2rem;
+    color: #555;
+}
+
+@media (max-width: 768px) {
+    .payment-options {
+        flex-direction: column;
+    }
+    .container {
+        padding: 10px;
+    }
+    .booking-form {
+        padding: 20px;
+    }
+}

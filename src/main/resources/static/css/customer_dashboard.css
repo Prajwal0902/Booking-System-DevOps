@@ -1,0 +1,116 @@
+body {
+    background-color: #f0f8ff;
+    margin: 0;
+    padding: 0;
+}
+
+.hero {
+    background: linear-gradient(135deg, #2821a9 0%, #667eea 100%);
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero p {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    opacity: 0.95;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.section-title {
+    text-align: center;
+    color: #2821a9;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    font-weight: 600;
+}
+
+.card-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.dashboard-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 40px 30px;
+    width: 320px;
+    text-align: center;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    border-color: #2821a9;
+}
+
+.dashboard-card i {
+    font-size: 60px;
+    color: #2821a9;
+    margin-bottom: 20px;
+}
+
+.dashboard-card h3 {
+    color: #333;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+.dashboard-card p {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.btn-action {
+    display: inline-block;
+    background: #c11616;
+    color: white;
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-action:hover {
+    background: #159557;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+    .hero p {
+        font-size: 1rem;
+    }
+    .section-title {
+        font-size: 1.8rem;
+    }
+    .dashboard-card {
+        width: 100%;
+    }
+}
