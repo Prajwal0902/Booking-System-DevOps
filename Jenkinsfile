@@ -1,19 +1,10 @@
 pipeline {
     agent any
    
-    tools {
-        maven 'Maven-3.9'
-        jdk 'JDK-21'
-    }
-   
     environment {
         DOCKER_IMAGE = 'booking-system'
         DOCKER_TAG = "${BUILD_NUMBER}"
         DOCKER_REGISTRY = 'ccr'
-        MYSQL_ROOT_PASSWORD = credentials('mysql-root-password')
-        MYSQL_DATABASE = credentials('mysql-database')
-        MYSQL_USER = credentials('mysql-user')
-        MYSQL_PASSWORD = credentials('mysql-password')
     }
    
     stages {
