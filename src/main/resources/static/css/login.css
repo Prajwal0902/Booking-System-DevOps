@@ -1,0 +1,140 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login-container {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    width: 400px;
+}
+
+h1 {
+    text-align: center;
+    color: #667eea;
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.error-message {
+    background: #ffebee;
+    color: #c62828;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    display: none;
+}
+
+.error-message.show {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 12px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-login:hover {
+    background: #5568d3;
+}
+
+.signup-link {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+}
+
+.signup-link a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.role-selector {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.role-option {
+    flex: 1;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.role-option:hover {
+    border-color: #667eea;
+    background: #f5f7ff;
+}
+
+.role-option.selected {
+    border-color: #667eea;
+    background: #667eea;
+    color: white;
+}
+
+.role-option input[type="radio"] {
+    display: none;
+}
+
+.role-option i {
+    font-size: 24px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.role-option .role-name {
+    font-weight: bold;
+    font-size: 14px;
+}

@@ -1,0 +1,156 @@
+body {
+    background-color: #f0f8ff;
+    margin: 0;
+}
+
+.hero {
+    background: linear-gradient(135deg, #2821a9 0%, #667eea 100%);
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.bookings-wrapper {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 30px;
+}
+
+.status-pending { 
+    color: #ff9800; 
+    font-weight: bold;
+    background: #fff3e0;
+    padding: 4px 12px;
+    border-radius: 12px;
+}
+
+.status-confirmed { 
+    color: #4caf50; 
+    font-weight: bold;
+    background: #e8f5e9;
+    padding: 4px 12px;
+    border-radius: 12px;
+}
+
+.status-cancelled { 
+    color: #f44336; 
+    font-weight: bold;
+    background: #ffebee;
+    padding: 4px 12px;
+    border-radius: 12px;
+}
+
+.btn-cancel {
+    background-color: #f44336;
+    color: white;
+    padding: 6px 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-cancel:hover {
+    background-color: #d32f2f;
+    transform: translateY(-2px);
+}
+
+.btn-cancel:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+table.dataTable {
+    border-collapse: collapse !important;
+}
+
+table.dataTable thead th {
+    background: #2821a9;
+    color: white;
+    font-weight: 600;
+    padding: 15px;
+    border: none;
+}
+
+table.dataTable tbody td {
+    padding: 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+table.dataTable tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    color: #ddd;
+    margin-bottom: 20px;
+}
+
+.empty-state h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.empty-state .btn {
+    display: inline-block;
+    background: #c11616;
+    color: white;
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: all 0.3s;
+}
+
+.empty-state .btn:hover {
+    background: #159557;
+}
+
+.payment-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.payment-completed {
+    background: #e8f5e9;
+    color: #4caf50;
+}
+
+.payment-pending {
+    background: #fff3e0;
+    color: #ff9800;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    .bookings-wrapper {
+        padding: 15px;
+        overflow-x: auto;
+    }
+}

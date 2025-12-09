@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body { 
+        margin: 0;
+        line-height: 1.6;
+    }
+    header {
+        background: linear-gradient(135deg, #2821a9, #667eea);
+        color: white;
+        padding: 1rem 0;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+    .header-content {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: white;
+        text-decoration: none;
+    }
+    .logo i {
+        font-size: 2rem;
+    }
+    .logo h1 {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+    nav ul {
+        display: flex;
+        list-style: none;
+        gap: 0.5rem;
+        margin: 0;
+        padding: 0;
+    }
+    nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.7rem 1.2rem;
+        border-radius: 6px;
+        transition: all 0.3s;
+        display: block;
+    }
+    nav a:hover {
+        background-color: rgba(255,255,255,0.2);
+    }
+    nav a.active {
+        background-color: rgba(255,255,255,0.3);
+        font-weight: 600;
+    }
+    .logout-btn {
+        background-color: #c11616 !important;
+        padding: 0.7rem 1.5rem !important;
+        border-radius: 6px !important;
+        font-weight: 600 !important;
+    }
+    .logout-btn:hover {
+        background-color: #a01313 !important;
+    }
+    @media (max-width: 768px) {
+        .header-content {
+            flex-direction: column;
+            gap: 1rem;
+        }
+        nav ul {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .logo h1 {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+</head>
+<body>
+<div th:fragment="navigation(activePage)">
+    <header>
+        <div class="header-content">
+            <!-- Admin Logo -->
+            <a href="/admin-dashboard" class="logo" th:if="${session.userRole == 'ADMIN'}">
+                <i class="fas fa-user-shield"></i>
+                <h1>Admin Portal</h1>
+            </a>
+            
+            <!-- Customer Logo -->
+            <a href="/customer-dashboard" class="logo" th:if="${session.userRole == 'CUSTOMER'}">
+                <i class="fas fa-box-open"></i>
+                <h1>Travel Booking System</h1>
+            </a>
+            
+            <nav>
+                <ul>
+                    <!-- Admin Navigation -->
+                    <li th:if="${session.userRole == 'ADMIN'}">
+                        <a href="/admin-dashboard" th:classappend="${activePage == 'admin-dashboard'} ? 'active' : ''">
+                            <i class="fas fa-home"></i> Dashboard
+                        </a>
+                    </li>
+                    <li th:if="${session.userRole == 'ADMIN'}">
+                        <a href="/packages" th:classappend="${activePage == 'packages'} ? 'active' : ''">
+                            <i class="fas fa-box"></i> Packages
+                        </a>
+                    </li>
+                    <li th:if="${session.userRole == 'ADMIN'}">
+                        <a href="/bookings" th:classappend="${activePage == 'bookings'} ? 'active' : ''">
+                            <i class="fas fa-calendar-check"></i> Bookings
+                        </a>
+                    </li>
+                    <li th:if="${session.userRole == 'ADMIN'}">
+                        <a href="/users" th:classappend="${activePage == 'users'} ? 'active' : ''">
+                            <i class="fas fa-users"></i> Users
+                        </a>
+                    </li>
+                    
+                    <!-- Customer Navigation -->
+                    <li th:if="${session.userRole == 'CUSTOMER'}">
+                        <a href="/customer-dashboard" th:classappend="${activePage == 'customer-dashboard'} ? 'active' : ''">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    <li th:if="${session.userRole == 'CUSTOMER'}">
+                        <a href="/customer/browse-packages" th:classappend="${activePage == 'browse-packages'} ? 'active' : ''">
+                            <i class="fas fa-gifts"></i> Packages
+                        </a>
+                    </li>
+                    <li th:if="${session.userRole == 'CUSTOMER'}">
+                        <a href="/customer/book-package" th:classappend="${activePage == 'book-package'} ? 'active' : ''">
+                            <i class="fas fa-calendar-plus"></i> Book Tickets
+                        </a>
+                    </li>
+                    <li th:if="${session.userRole == 'CUSTOMER'}">
+                        <a href="/customer/my-bookings" th:classappend="${activePage == 'my-bookings'} ? 'active' : ''">
+                            <i class="fas fa-ticket-alt"></i> My Bookings
+                        </a>
+                    </li>
+                    
+                    <!-- Logout Button -->
+                    <li th:if="${session.username != null}">
+                        <a href="/logout" class="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+</div>
+</body>
+</html>
