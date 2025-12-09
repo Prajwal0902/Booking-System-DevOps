@@ -20,6 +20,7 @@ pipeline {
                 echo 'Building the application...'
                 script {
                     if (isUnix()) {
+                        sh 'chmod +x mvnw'
                         sh './mvnw clean package -DskipTests'
                     } else {
                         bat './mvnw.cmd clean package -DskipTests'
@@ -33,6 +34,7 @@ pipeline {
                 echo 'Running unit tests...'
                 script {
                     if (isUnix()) {
+                        sh 'chmod +x mvnw'
                         sh './mvnw test'
                     } else {
                         bat './mvnw.cmd test'
@@ -82,11 +84,11 @@ pipeline {
                 echo 'Deploying to staging environment...'
                 script {
                     if (isUnix()) {
-                        sh 'docker-compose down'
-                        sh 'docker-compose up -d'
+                        sh 'docker compose down'
+                        sh 'docker compose up -d'
                     } else {
-                        bat 'docker-compose down'
-                        bat 'docker-compose up -d'
+                        bat 'docker compose down'
+                        bat 'docker compose up -d'
                     }
                 }
             }
@@ -136,13 +138,13 @@ pipeline {
                 // Rollback to previous version
                 echo 'Rolling back to previous stable version...'
                 if (isUnix()) {
-                    sh 'docker-compose down'
+                    sh 'docker compose down'
                     sh 'docker pull ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:latest'
-                    sh 'docker-compose up -d'
+                    sh 'docker compose up -d'
                 } else {
-                    bat 'docker-compose down'
+                    bat 'docker compose down'
                     bat 'docker pull ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:latest'
-                    bat 'docker-compose up -d'
+                    bat 'docker compose up -d'
                 }
             }
         }
